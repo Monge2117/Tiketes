@@ -1,0 +1,37 @@
+<mat-sidenav-container class="layout">
+
+<mat-sidenav opened mode="side">
+
+<mat-nav-list>
+
+@for(item of menuItems(); track item.path){
+
+<a
+mat-list-item
+[routerLink]="item.path"
+routerLinkActive="active"
+[routerLinkActiveOptions]="{ exact: true }">
+
+<mat-icon>
+{{item.icon}}
+</mat-icon>
+
+{{item.label}}
+
+</a>
+
+}
+
+</mat-nav-list>
+
+</mat-sidenav>
+
+<mat-sidenav-content>
+
+<section class="content">
+<router-outlet/>
+</section>
+
+</mat-sidenav-content>
+
+</mat-sidenav-container>

@@ -1,0 +1,56 @@
+
+
+
+@if (loading()) {
+  <div>Cargando...</div>
+}
+
+<table>
+  <thead>
+    <tr>
+      <th (click)="onSort('number')">Número
+        <input (input)="onFilterChange('number', $event)" />
+      </th>
+      <th (click)="onSort('nombre')">Nombre
+        <input (input)="onFilterChange('nombre', $event)" />
+      </th>
+      <th (click)="onSort('status')">Estado
+         <input (input)="onFilterChange('status', $event)" />
+      </th>
+      <th (click)="onSort('assignedBox')">Box
+        <input (input)="onFilterChange('assignedBox', $event)" />
+      </th>
+      <th (click)="onSort('createdAt')">Fecha</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (t of data(); track t.number) {
+      <tr>
+        <td>{{ t.number }}</td>
+        <td>{{ t.nombre }}</td>
+        <td>{{ t.status }}</td>
+        <td>{{ t.assignedBox }}</td>
+        <td>{{ t.createdAt | date:'short' }}</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<div>
+  <button (click)="onPageChange(pageIndex() - 1)" [disabled]="pageIndex() === 0">
+    Anterior
+  </button>
+
+  <span>Página {{ pageIndex() + 1 }}</span>
+
+  <button
+    (click)="onPageChange(pageIndex() + 1)"
+    [disabled]="(pageIndex() + 1) * pageSize() >= total()"
+  >
+    Siguiente
+  </button>
+</div>
+
+
+
