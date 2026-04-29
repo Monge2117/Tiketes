@@ -13,10 +13,17 @@ redirectTo:'Tickets',
 pathMatch:'full'
 },
 {
-path:'Tickets',
+path:'tickets',
 loadComponent:() =>
 import('./pages/tiketes/tiketes')
 .then(m=>m.Tiketes)
-}
+},
+{
+path:'Logout',
+loadComponent:() =>
+import('./pages/cerrar-session/cerrar-session')
+.then(m=>m.CerrarSession)
+},
+
   ] },
 ];

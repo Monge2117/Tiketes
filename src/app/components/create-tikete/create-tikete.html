@@ -1,0 +1,113 @@
+<div class="ticket-container modal-header">
+
+<h2>Crear Ticket</h2>
+
+  <button
+   mat-icon-button
+   (click)="closeModal()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+<form
+ [formGroup]="form"
+ (ngSubmit)="submit()"
+ class="ticket-form"
+>
+
+<mat-form-field appearance="outline" class="full-width">
+  <mat-label>Nombre Cliente</mat-label>
+
+  <input
+    matInput
+    formControlName="nombreCliente"
+
+  />
+
+@if(form.controls.nombreCliente.hasError('required')){
+  <mat-error>
+     Nombre cliente es requerido
+  </mat-error>
+}
+
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline" class="full-width">
+  <mat-label>Assigned Box</mat-label>
+
+  <input
+   matInput
+   formControlName="assignedBox"
+
+  />
+
+@if(form.controls.assignedBox.hasError('required')){
+  <mat-error>
+      Assigned Box es requerido
+  </mat-error>
+}
+
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline" class="full-width">
+
+ <mat-label>Status</mat-label>
+
+ <mat-select formControlName="status">
+
+   <mat-option [value]="0">
+      Seleccione un estado
+   </mat-option>
+
+   @for(item of statuses(); track item.code){
+
+    <mat-option [value]="item.code">
+      {{item.name}}
+    </mat-option>
+
+   }
+
+ </mat-select>
+
+</mat-form-field>
+
+
+
+<button
+ mat-raised-button
+ color="primary"
+ type="submit"
+ [disabled]="loading()"
+>
+
+@if(loading()){
+
+<mat-spinner
+ diameter="20">
+</mat-spinner>
+
+}
+@else{
+Crear Ticket
+}
+
+</button>
+
+@if(successMessage()){
+<p class="success">
+ {{successMessage()}}
+</p>
+}
+
+@if(errorMessage()){
+<p class="error">
+ {{errorMessage()}}
+</p>
+}
+
+</form>
+
+</div>

@@ -1,15 +1,24 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TicketDto } from '../models/tiketeDTO';
 import { environment } from '../enviroments/enviroment';
+import { CreateTicketRequest } from '../models/createTiketeRequest';
+import { StatusDTO } from '../models/statusDTO';
 @Injectable({
   providedIn: 'root',
 })
 export class TiketesServiceService {
-private apiUrl = environment.apiUrl + '/api/tickets';
-  constructor(private http: HttpClient) { }
+  private apiUrl = environment.apiUrl + '/tickets';
+  private http = inject(HttpClient);
 
+  getStatuses(): Observable<StatusDTO[]> {
+    return this.http.get<StatusDTO[]>(
+      `${this.apiUrl}/statuses`,{
+        withCredentials: true // 🔥 ESTO ES CLAVE PARA COOKIES
+      }
+    );
+  }
   getTickets(): Observable<TicketDto[]> {
     return this.http.get<TicketDto[]>(this.apiUrl+'/ListaTiketes',{ withCredentials: true});
   }
@@ -36,9 +45,15 @@ private apiUrl = environment.apiUrl + '/api/tickets';
     }
   );
 }
+
    // Crear ticket
-  createTicket(ticket: Partial<TicketDto>): Observable<TicketDto> {
-    return this.http.post<TicketDto>(this.apiUrl+'/CreateTikete', ticket,{ withCredentials: true});
+  createTicket(ticket:CreateTicketRequest): Observable<TicketDto> {
+     const params = new HttpParams()
+      .set('nombreCliente', ticket.nombreCliente)
+      .set('status', ticket.status)
+      .set('AssignedBox', ticket.assignedBox);
+
+    return this.http.post<TicketDto>(this.apiUrl+'/CreateTikete', null,{params, withCredentials: true});
   }
 
   // Actualizar ticket
