@@ -19,29 +19,39 @@ export class TiketesServiceService {
       }
     );
   }
+
+
   getTickets(): Observable<TicketDto[]> {
     return this.http.get<TicketDto[]>(this.apiUrl+'/ListaTiketes',{ withCredentials: true});
   }
  getTickets2(params: {
   page: number;
   pageSize: number;
-  search?: string;
   sortBy?: string;
   sortDir?: 'asc' | 'desc';
   filters?: Record<string, string>;
 }) {
+  let httpParams = new HttpParams()
+    .set('page', params.page.toString())
+    .set('pageSize', params.pageSize.toString())
+    .set('sortBy', params.sortBy || '')
+    .set('sortDir', params.sortDir || '');
+
+  // Agregar filtros dinámicamente
+  if (params.filters) {
+    Object.keys(params.filters).forEach((key) => {
+      const value = params.filters![key];
+      if (value) {
+        httpParams = httpParams.set(key, value);
+      }
+    });
+  }
+
   return this.http.get<{ data: TicketDto[]; total: number }>(
-    this.apiUrl+'/ListaTiketes2',
+    this.apiUrl + '/ListaTiketes2',
     {
-      params: {
-        page: params.page,
-        pageSize: params.pageSize,
-        search: params.search || '',
-        sortBy: params.sortBy || '',
-        sortDir: params.sortDir || '',
-        ...params.filters // 🔥 aquí va lo importante
-      },
-      withCredentials: true
+      params: httpParams,
+      withCredentials: true,
     }
   );
 }
@@ -54,6 +64,11 @@ export class TiketesServiceService {
       .set('AssignedBox', ticket.assignedBox);
 
     return this.http.post<TicketDto>(this.apiUrl+'/CreateTikete', null,{params, withCredentials: true});
+  }
+
+   // Crear ticket
+    createTicket2(ticket: TicketDto): Observable<TicketDto> {
+    return this.http.post<TicketDto>(this.apiUrl, ticket,{withCredentials: true});
   }
 
   // Actualizar ticket

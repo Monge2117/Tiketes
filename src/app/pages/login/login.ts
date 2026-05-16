@@ -1,5 +1,6 @@
 import { Login as LoginService } from './../../services/login';
 import { Component, effect, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 // Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
