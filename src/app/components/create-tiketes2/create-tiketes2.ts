@@ -16,10 +16,12 @@ import {
 } from '@angular/forms';
 
 import moment from 'moment';
+import { v7 as uuidv7 } from 'uuid';
 import { StatusDTO } from '../../models/statusDTO';
 import { TiketesServiceService } from '../../services/tikete';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list'
+import { CreateTicketRequest2 } from '../../models/createTiketeRequest2';
 @Component({
   selector: 'app-create-tiketes2',
   imports: [
@@ -59,7 +61,8 @@ private servicio = inject(TiketesServiceService);
       Number: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
       CreatedAt: [moment(), [Validators.required]],
       AssignedBox: ['', [Validators.required, Validators.minLength(6)]],
-      Status: ['', Validators.required]
+      Status: ['', Validators.required],
+      Nombre: ['', Validators.required]
     });
   }
 
@@ -76,10 +79,11 @@ private servicio = inject(TiketesServiceService);
     }
 
     this.isSubmitting = true;
-    const tiketeData = this.TiketeForm.value;
-    const fecha = this.TiketeForm.value.fecha?.format?.('DD/MM/YYYY');
+    debugger;
+    const tiketeData: CreateTicketRequest2 = this.TiketeForm.value;
+    const fecha = this.TiketeForm.value.CreatedAt?.format?.('DD/MM/YYYY');
     console.log('Datos del Tikete:', tiketeData);
-
+    tiketeData.id = uuidv7(); //id randon
     this.servicio.createTicket2(tiketeData).subscribe({
       next: (resp) => {
         console.log('Tikete creado:', resp);

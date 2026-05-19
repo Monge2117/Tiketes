@@ -1,0 +1,13 @@
+.container{padding:16px;}
+.header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.filters-section{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.filter-field{width:220px}
+.loading-container{display:flex;justify-content:center;padding:24px}
+.table-container{overflow:auto}
+.tickets-table{width:100%}
+.status-badge{padding:4px 8px;border-radius:4px;color:#fff}
+.status-badge.served{background:#4caf50}
+.status-badge.waiting{background:#ffeb3b;color:#000}
+.status-badge.called{background:#f44336}
+.no-data{padding:16px;color:#666}
+.paginator-container{display:flex;justify-content:flex-end;padding-top:12px}

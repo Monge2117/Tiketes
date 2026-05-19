@@ -1,0 +1,22 @@
+<div class="edit-container">
+  <h2>Editar Tiquete</h2>
+
+  <form [formGroup]="editForm" (ngSubmit)="save()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let s of itemsStatus" [value]="s.code">{{ s.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="actions">
+      <button mat-stroked-button type="button" (click)="close()">Cancelar</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="isSubmitting">Guardar</button>
+    </div>
+  </form>
+</div>

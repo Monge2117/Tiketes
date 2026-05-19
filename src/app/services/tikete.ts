@@ -5,6 +5,8 @@ import { TicketDto } from '../models/tiketeDTO';
 import { environment } from '../enviroments/enviroment';
 import { CreateTicketRequest } from '../models/createTiketeRequest';
 import { StatusDTO } from '../models/statusDTO';
+import { CreateTicketRequest2 } from '../models/createTiketeRequest2';
+import { EditTicketRequest } from '../models/editTiketeDTO';
 @Injectable({
   providedIn: 'root',
 })
@@ -67,13 +69,13 @@ export class TiketesServiceService {
   }
 
    // Crear ticket
-    createTicket2(ticket: TicketDto): Observable<TicketDto> {
-    return this.http.post<TicketDto>(this.apiUrl, ticket,{withCredentials: true});
+    createTicket2(ticket: CreateTicketRequest2): Observable<TicketDto> {
+    return this.http.post<TicketDto>(this.apiUrl+'/CreateTikete2', ticket,{withCredentials: true});
   }
 
   // Actualizar ticket
-  updateTicket(id: string, ticket: Partial<TicketDto>): Observable<TicketDto> {
-    return this.http.put<TicketDto>(`${this.apiUrl}+'/ModificarTikete'/${id}`, ticket,{ withCredentials: true});
+  updateTicket(id: string, ticket: EditTicketRequest): Observable<TicketDto> {
+    return this.http.put<TicketDto>(`${this.apiUrl}/ModificarTikete/${id}`, ticket, { withCredentials: true });
   }
 
   // Eliminar ticket

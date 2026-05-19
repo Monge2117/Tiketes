@@ -1,0 +1,83 @@
+<div class="container">
+	<div class="header">
+		<h1>Lista de Tiquetes (Signals)</h1>
+		<button mat-stroked-button color="primary" (click)="clearFilters()">Limpiar Filtros</button>
+	</div>
+
+	<div class="filters-section">
+		<mat-form-field appearance="outline" class="filter-field">
+			<mat-label>Filtrar por Número</mat-label>
+			<input matInput [ngModel]="filters().number" (ngModelChange)="setFilter('number',$event)" placeholder="Ej: 123" />
+		</mat-form-field>
+
+		<mat-form-field appearance="outline" class="filter-field">
+			<mat-label>Filtrar por Nombre</mat-label>
+			<input matInput [ngModel]="filters().nombre" (ngModelChange)="setFilter('nombre',$event)" placeholder="Ej: Problema" />
+		</mat-form-field>
+
+		<mat-form-field appearance="outline" class="filter-field">
+			<mat-label>Filtrar por Estado</mat-label>
+			<input matInput [ngModel]="filters().status" (ngModelChange)="setFilter('status',$event)" placeholder="Ej: Abierto" />
+		</mat-form-field>
+
+		<mat-form-field appearance="outline" class="filter-field">
+			<mat-label>Filtrar por Caja</mat-label>
+			<input matInput [ngModel]="filters().assignedBox" (ngModelChange)="setFilter('assignedBox',$event)" placeholder="Ej: Caja 1" />
+		</mat-form-field>
+	</div>
+
+	<div *ngIf="isLoading()" class="loading-container">
+		<mat-spinner></mat-spinner>
+	</div>
+
+	<div *ngIf="!isLoading()" class="table-container">
+		<table mat-table [dataSource]="items()" class="tickets-table" aria-label="Tiquetes">
+
+			<!-- Número Column -->
+			<ng-container matColumnDef="number">
+				<th mat-header-cell *matHeaderCellDef>Número</th>
+				<td mat-cell *matCellDef="let element">{{ element.number }}</td>
+			</ng-container>
+
+			<!-- Nombre Column -->
+			<ng-container matColumnDef="nombre">
+				<th mat-header-cell *matHeaderCellDef>Nombre</th>
+				<td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+			</ng-container>
+
+			<!-- Status Column -->
+			<ng-container matColumnDef="status">
+				<th mat-header-cell *matHeaderCellDef>Estado</th>
+				<td mat-cell *matCellDef="let element"><span class="status-badge" [ngClass]="element.status?.toLowerCase()">{{ element.status }}</span></td>
+			</ng-container>
+
+			<!-- Assigned Box Column -->
+			<ng-container matColumnDef="assignedBox">
+				<th mat-header-cell *matHeaderCellDef>Caja Asignada</th>
+				<td mat-cell *matCellDef="let element">{{ element.assignedBox }}</td>
+			</ng-container>
+
+			<!-- Created At Column -->
+			<ng-container matColumnDef="createdAt">
+				<th mat-header-cell *matHeaderCellDef>Fecha de Creación</th>
+				<td mat-cell *matCellDef="let element">{{ element.createdAt | date : 'short' }}</td>
+			</ng-container>
+
+			<!-- Actions Column -->
+			<ng-container matColumnDef="actions">
+				<th mat-header-cell *matHeaderCellDef>Acciones</th>
+				<td mat-cell *matCellDef="let element"><button mat-button (click)="openDetails(element)">Ver Detalles</button></td>
+			</ng-container>
+
+			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+		</table>
+
+		<div *ngIf="items().length === 0" class="no-data">No se encontraron tiquetes</div>
+	</div>
+
+	<div *ngIf="!isLoading()" class="paginator-container">
+		<mat-paginator [length]="totalItems()" [pageSize]="pageSize()" [pageSizeOptions]="[5,10,25,50]" (page)="onPageChange($event)" showFirstLastButtons>
+		</mat-paginator>
+	</div>
+</div>

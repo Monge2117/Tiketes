@@ -111,6 +111,20 @@
   color: white;
 }
 
+/* Mapeo para estados en inglés: Served, Waiting, Called */
+.status-badge.served {
+  background-color: #4caf50; /* verde */
+  color: white;
+}
+.status-badge.waiting {
+  background-color: #ffeb3b; /* amarillo */
+  color: #000; /* texto oscuro para contraste */
+}
+.status-badge.called {
+  background-color: #f44336; /* rojo */
+  color: white;
+}
+
 /* Botones de acción */
 .btn-action {
   padding: 6px 12px;

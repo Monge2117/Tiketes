@@ -1,0 +1,30 @@
+.edit-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px; /* espacio en los bordes */
+  box-sizing: border-box;
+  align-items: center; /* centrar contenido horizontalmente */
+}
+.full-width {
+  width: 100%;
+  margin-bottom: 12px;
+}
+.actions {
+  display: flex;
+  justify-content: center; /* centrar botones */
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* ajustar el formulario para que quede centrado y con ancho limitado */
+.edit-container form {
+  width: 100%;
+  max-width: 560px;
+}
+
+.edit-container h2 {
+  width: 100%;
+  text-align: center;
+  margin: 0 0 12px 0;
+}
