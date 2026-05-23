@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { CreateTikete } from '../../components/create-tikete/create-tikete';
@@ -13,6 +13,8 @@ import { ListaTiketes2 } from "../../components/lista-tiketes2/lista-tiketes2";
 })
 export class Tiketes {
    private dialog = inject(MatDialog);
+   //viewchild para acceder a la lista hija y recargarla después de crear un nuevo tikete
+   @ViewChild(ListaTiketes2) listaTiketes2!: ListaTiketes2;
 
  openTicketModal() {
 
@@ -28,7 +30,8 @@ dialogRef.afterClosed()
  .subscribe(result => {
 
    if(result){
-      //this.loadTickets(); // recarga lista
+    // recarga la lista hija
+    this.listaTiketes2?.loadData?.();
    }
 
  });
@@ -52,7 +55,8 @@ dialogRef.afterClosed()
  .subscribe(result => {
 
    if(result){
-      //this.loadTickets(); // recarga lista
+    // recarga la lista hija
+    this.listaTiketes2?.loadData?.();
    }
 
  });
